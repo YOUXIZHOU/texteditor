@@ -2,12 +2,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Type;
 
-public class Find extends JFrame
+public class Find extends JFrame implements Function
 {
     JTextPane main_textPane , target_textPane;
-    public Find(String input_text){
+
+    @Override
+    public java.lang.reflect.Type accept(Vistor v) {
+        return v.visit(this);
+    }
+    public Find(){
         super("尋找");
+    }
+    public void feature(String input_text){
+
         String ip[];
         ip = input_text.split("\n");
         setSize(250,300);

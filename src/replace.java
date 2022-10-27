@@ -3,10 +3,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class replace extends JFrame {
+public class replace extends JFrame implements Function {
     StringBuffer output = new StringBuffer("");
-    public replace(String input_text){
+
+    @Override
+    public java.lang.reflect.Type accept(Vistor v) {
+        return v.visit(this);
+    }
+    public replace(){
         super("取代");
+    }
+
+    public void feature(String input_text){
         String ip[];
         ip = input_text.split("\n");
         setSize(250,300);
@@ -63,6 +71,7 @@ public class replace extends JFrame {
             }
         });
         setContentPane(pn);
+        output.delete(0,output.length());
     }
     public String getop(){
         return output.toString();

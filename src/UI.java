@@ -20,13 +20,15 @@ public class UI extends JFrame implements ActionListener {
     JButton newButton, undoButton, redoButton, boldButton, italicsButton, bottomlineButton, listButton, numberlistButton,centerButton,leftalignButton,rightalignButton;
     JMenuItem openFile, saveFile, saveFileAs, cut, paste, copy, blue, red, pink, normalModel, darkModel, standard, microsoftBold, newDetail, new_Windows, ye, or, ge,replace,FIND;
     JTextArea textAreaOutput;
-    replace rp;
+    replace rp = new replace();
     JLabel stateBar;
 
     StyleContext sc = new StyleContext();
     DefaultStyledDocument doc = new DefaultStyledDocument(sc);
     JTextPane textPane = new JTextPane(doc);
 
+    Fuc_vistor visitor = new Fuc_vistor();
+    Find find = new Find();
 
     DefineImageButton defineImageButton = new DefineImageButton();
     AdjustFontSize adjustFontSize = new AdjustFontSize();
@@ -97,20 +99,23 @@ public class UI extends JFrame implements ActionListener {
         FIND.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e)
             {
-                Find ff = new Find(textPane.getText());  //開啟視窗
+                visitor.inputtext(textPane.getText());
+                find.accept(visitor);  //開啟視窗
             }
         });
         replace = new JMenuItem("取代");
         replace.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                replace rp = new replace(textPane.getText());
+                visitor.inputtext(textPane.getText());
+                rp.accept(visitor);
 
                 rp.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosed(WindowEvent e) {
                         super.windowClosing(e);
                         textPane.setText(rp.getop());
+                        visitor.inputtext(rp.getop());
                     }
                 });
             }
